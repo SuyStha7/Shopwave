@@ -107,11 +107,11 @@ const Categories = () => {
   }
 
   return (
-    <div className="border border-gray-400 rounded-md h-full p-5">
+    <div className='border border-gray-400 rounded-md h-full p-5'>
       <section>
         <Card className='md:w-[550px] lg:ml-[23%]  shadow-none outline-none'>
           <CardHeader>
-            <CardTitle className='text-center'>Add Category</CardTitle>
+            <CardTitle className='text-center'>Add Product</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit}>
@@ -121,7 +121,7 @@ const Categories = () => {
                   type='text'
                   name='name'
                   value={inputValues.name || ""}
-                  placeholder='Category Name'
+                  placeholder='Product Name'
                   onChange={handleChange}
                   className='mr-2 w-[250px]'
                 />
@@ -135,16 +135,25 @@ const Categories = () => {
       <section>
         <Card className='md:w-full shadow-none outline-none border border-gray-400 rounded-none'>
           <Table>
-            <TableHeader className="bg-gray-50">
+            <TableHeader className='bg-gray-50 text-center'>
               <TableRow>
                 <TableHead className='font-bold text-black text-[15px]'>
                   S.N.
                 </TableHead>
                 <TableHead className='font-bold text-black text-[15px]'>
-                  Category Name
+                  Product Image
                 </TableHead>
                 <TableHead className='font-bold text-black text-[15px]'>
-                  Category Slug
+                  Product Name
+                </TableHead>
+                <TableHead className='font-bold text-black text-[15px]'>
+                  Product Description
+                </TableHead>
+                <TableHead className='font-bold text-black text-[15px]'>
+                  Product Price
+                </TableHead>
+                <TableHead className='font-bold text-black text-[15px]'>
+                  Product Slug
                 </TableHead>
                 <TableHead className='font-bold text-black text-[15px]'>
                   Created At
@@ -163,6 +172,15 @@ const Categories = () => {
                     <TableRow key={cat._id}>
                       <TableCell className='text-[15px] font-medium'>
                         {index + 1}
+                      </TableCell>
+                      <TableCell className='capitalize text-[15px] font-medium'>
+                        {cat.name}
+                      </TableCell>
+                      <TableCell className='text-[15px] font-medium'>
+                        {cat.slug}
+                      </TableCell>
+                      <TableCell className='text-[15px] font-medium'>
+                        {moment(cat.createdAt).format("YYYY-MM-DD")}
                       </TableCell>
                       <TableCell className='capitalize text-[15px] font-medium'>
                         {cat.name}

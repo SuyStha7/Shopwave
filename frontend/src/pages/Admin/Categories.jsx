@@ -176,7 +176,7 @@ const Categories = () => {
                         {moment(cat.createdAt).format("YYYY-MM-DD")}
                       </TableCell>
                       <TableCell>
-                        <div className='flex gap-6 items-center cursor-pointer'>
+                        <div className='flex gap-4 items-center cursor-pointer'>
                           <FaRegEdit
                             onClick={() =>
                               navigate(`/admin/categories/update/${cat.slug}`)
