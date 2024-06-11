@@ -58,10 +58,11 @@ const getSingleCat = async (slug) => {
   }
 };
 
-const deleteCat = async (slug) => {
+const updateCat = async ({ name, slug }) => {
   try {
-    const axiosResponse = await axios.delete(
-      `${import.meta.env.VITE_BASE_URL}/categories/delCategory/${slug}`,
+    const axiosResponse = await axios.put(
+      `${import.meta.env.VITE_BASE_URL}/categories/updateCategory/${slug}`,
+      { name },
       {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
@@ -77,11 +78,10 @@ const deleteCat = async (slug) => {
   }
 };
 
-const updateCat = async ({ name, slug }) => {
+const deleteCat = async (slug) => {
   try {
-    const axiosResponse = await axios.put(
-      `${import.meta.env.VITE_BASE_URL}/categories/updateCategory/${slug}`,
-      { name },
+    const axiosResponse = await axios.delete(
+      `${import.meta.env.VITE_BASE_URL}/categories/delCategory/${slug}`,
       {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,

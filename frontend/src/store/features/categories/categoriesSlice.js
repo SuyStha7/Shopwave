@@ -40,12 +40,12 @@ export const getSingleCategory = createAsyncThunk(
   }
 );
 
-// use this function in Categories
-export const deleteCategory = createAsyncThunk(
-  "categories/deleteCategory",
-  async (slug, thunkAPI) => {
+// use this function in UpadateCategory
+export const updateCategory = createAsyncThunk(
+  "categories/updateCategory",
+  async ({ name, slug }, thunkAPI) => {
     try {
-      const response = await categoriesService.deleteCat(slug);
+      const response = await categoriesService.updateCat({ name, slug });
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -53,11 +53,12 @@ export const deleteCategory = createAsyncThunk(
   }
 );
 
-export const updateCategory = createAsyncThunk(
-  "categories/updateCategory",
-  async ({ name, slug }, thunkAPI) => {
+// use this function in Categories
+export const deleteCategory = createAsyncThunk(
+  "categories/deleteCategory",
+  async (slug, thunkAPI) => {
     try {
-      const response = await categoriesService.updateCat({ name, slug });
+      const response = await categoriesService.deleteCat(slug);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -77,6 +78,7 @@ const categoriesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // add category
       .addCase(addCategory.pending, (state) => {
         state.status = "loading";
         state.error = null;
@@ -90,6 +92,7 @@ const categoriesSlice = createSlice({
         state.error = action.payload;
       })
 
+      // get all category
       .addCase(getAllCategories.pending, (state) => {
         state.status = "loading";
         state.error = null;
@@ -103,6 +106,7 @@ const categoriesSlice = createSlice({
         state.error = action.payload;
       })
 
+      // get single category
       .addCase(getSingleCategory.pending, (state) => {
         state.status = "loading";
         state.error = null;
@@ -116,6 +120,7 @@ const categoriesSlice = createSlice({
         state.error = action.payload;
       })
 
+      // update category
       .addCase(updateCategory.pending, (state) => {
         state.status = "loading";
         state.error = null;
@@ -129,6 +134,7 @@ const categoriesSlice = createSlice({
         state.error = action.payload;
       })
 
+      // delete category
       .addCase(deleteCategory.pending, (state) => {
         state.status = "loading";
         state.error = null;
