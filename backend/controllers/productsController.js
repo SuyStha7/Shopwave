@@ -1,5 +1,7 @@
 import productsModel from "../models/productsModel.js";
 import { uploadImageOnCloudinary } from "../helper/cloudinaryHelper.js";
+
+
 const addProductController = async (req, res) => {
   try {
     const { title, desc, category, price } = req.body;
