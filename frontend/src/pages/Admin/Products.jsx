@@ -1,219 +1,26 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  addCategory,
-  deleteCategory,
-  getAllCategories,
-} from "@/store/features/categories/categoriesSlice";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import moment from "moment";
-import { MutatingDots } from "react-loader-spinner";
-import { useNavigate } from "react-router-dom";
-import { FaRegEdit } from "react-icons/fa";
-import { AiOutlineDelete } from "react-icons/ai";
 
-const Categories = () => {
-  const initialValue = {
-    name: "",
-  };
-
-  const [inputValues, setInputValues] = useState({});
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const category = useSelector((state) => state.categories.categories);
-  const status = useSelector((state) => state.categories.status);
-  const error = useSelector((state) => state.categories.error);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInputValues((values) => ({ ...values, [name]: value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(addCategory(inputValues))
-      .unwrap()
-      .then((res) => {
-        if (res?.success === true) {
-          toast.success(res?.message, { autoClose: 1000 });
-          dispatch(getAllCategories());
-          setInputValues(initialValue);
-        } else {
-          toast.error(res?.message, { autoClose: 1000 });
-        }
-      })
-      .catch((err) => {
-        toast.error(err, { autoClose: 1000 });
-      });
-  };
-
-  const handleDelete = (slug) => {
-    dispatch(deleteCategory(slug))
-      .unwrap()
-      .then((res) => {
-        if (res?.success === true) {
-          toast.success(res?.message, { autoClose: 1000 });
-          dispatch(getAllCategories());
-          setInputValues(initialValue);
-        } else {
-          toast.error(res?.message, { autoClose: 1000 });
-        }
-      })
-      .catch((err) => {
-        toast.error(err, { autoClose: 1000 });
-      });
-  };
-
-  useEffect(() => {
-    dispatch(getAllCategories());
-  }, [dispatch]);
-
-  if (status === "loading") {
-    return (
-      <div className='flex justify-center items-center h-full'>
-        <MutatingDots
-          visible={true}
-          height='100'
-          width='100'
-          color='#000'
-          secondaryColor='#000'
-          radius='12'
-          ariaLabel='mutating-dots-loading'
-          wrapperStyle={{}}
-          wrapperClass=''
-        />
-      </div>
-    );
-  }
-
-  if (error == "error") {
-    return (
-      <div className='flex justify-center items-center h-full'>
-        <p>Error while fetching</p>
-      </div>
-    );
-  }
-
+const Products = () => {
   return (
-    <div className='border border-gray-400 rounded-md h-full p-5'>
-      <section>
-        <Card className='md:w-[550px] lg:ml-[23%]  shadow-none outline-none'>
-          <CardHeader>
-            <CardTitle className='text-center'>Add Product</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit}>
-              <div className='flex items-center justify-center gap-2'>
-                <Input
-                  id='name'
-                  type='text'
-                  name='name'
-                  value={inputValues.name || ""}
-                  placeholder='Product Name'
-                  onChange={handleChange}
-                  className='mr-2 w-[250px]'
-                />
-                <Button>Add</Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
-      </section>
-
-      <section>
-        <Card className='md:w-full shadow-none outline-none border border-gray-400 rounded-none'>
-          <Table>
-            <TableHeader className='bg-gray-50 text-center'>
-              <TableRow>
-                <TableHead className='font-bold text-black text-[15px]'>
-                  S.N.
-                </TableHead>
-                <TableHead className='font-bold text-black text-[15px]'>
-                  Product Image
-                </TableHead>
-                <TableHead className='font-bold text-black text-[15px]'>
-                  Product Name
-                </TableHead>
-                <TableHead className='font-bold text-black text-[15px]'>
-                  Product Description
-                </TableHead>
-                <TableHead className='font-bold text-black text-[15px]'>
-                  Product Price
-                </TableHead>
-                <TableHead className='font-bold text-black text-[15px]'>
-                  Product Slug
-                </TableHead>
-                <TableHead className='font-bold text-black text-[15px]'>
-                  Created At
-                </TableHead>
-                <TableHead className='font-bold text-black text-[15px]'>
-                  Actions
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              {category &&
-                category.categories &&
-                category.categories.map((cat, index) => {
-                  return (
-                    <TableRow key={cat._id}>
-                      <TableCell className='text-[15px] font-medium'>
-                        {index + 1}
-                      </TableCell>
-                      <TableCell className='capitalize text-[15px] font-medium'>
-                        {cat.name}
-                      </TableCell>
-                      <TableCell className='text-[15px] font-medium'>
-                        {cat.slug}
-                      </TableCell>
-                      <TableCell className='text-[15px] font-medium'>
-                        {moment(cat.createdAt).format("YYYY-MM-DD")}
-                      </TableCell>
-                      <TableCell className='capitalize text-[15px] font-medium'>
-                        {cat.name}
-                      </TableCell>
-                      <TableCell className='text-[15px] font-medium'>
-                        {cat.slug}
-                      </TableCell>
-                      <TableCell className='text-[15px] font-medium'>
-                        {moment(cat.createdAt).format("YYYY-MM-DD")}
-                      </TableCell>
-                      <TableCell>
-                        <div className='flex gap-6 items-center cursor-pointer'>
-                          <FaRegEdit
-                            onClick={() =>
-                              navigate(`/admin/categories/update/${cat.slug}`)
-                            }
-                            className='w-5 h-5 text-green-800 hover:text-black'
-                          />
-                          <AiOutlineDelete
-                            onClick={() => handleDelete(cat.slug)}
-                            className='w-5 h-5 text-red-800 hover:text-black'
-                          />
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </Card>
-      </section>
-    </div>
+    <>
+      <div className='flex items-center'>
+        <h1 className='text-lg font-semibold md:text-2xl'>Products</h1>
+      </div>
+      <div
+        className='flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm'
+        x-chunk='dashboard-02-chunk-1'>
+        <div className='flex flex-col items-center gap-1 text-center'>
+          <h3 className='text-2xl font-bold tracking-tight'>
+            You have no products
+          </h3>
+          <p className='text-sm text-muted-foreground'>
+            You can start selling as soon as you add a product.
+          </p>
+          <Button className='mt-4'>Products</Button>
+        </div>
+      </div>
+    </>
   );
 };
 
-export default Categories;
+export default Products;

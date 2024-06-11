@@ -16,17 +16,17 @@ const app = express();
 // middlewares
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: process.env.VITE_URL, credentials: true }));
 app.use(cookieParser());
 
 //importing routes
 import userRouter from "./routes/userRoutes.js";
 import categoriesRouter from "./routes/categoriesRoutes.js";
-import productRouter from "./routes/productRoutes.js";
+import productsRouter from "./routes/productsRoutes.js";
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/categories", categoriesRouter);
-app.use("/api/v1/products", productRouter);
+app.use("/api/v1/products", productsRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
