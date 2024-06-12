@@ -10,11 +10,11 @@ import {
 
 const categoriesRouter = express.Router();
 
-// {{url}}/categories/getCategory
+// {{baseUrl}}/categories/getCategory
 categoriesRouter.get("/getCategory", getAllCategoriesController);
 
 // Admin routes
-// {{url}}/categories/addCategory
+// {{baseUrl}}/categories/addCategory
 categoriesRouter.post(
   "/addCategory",
   isAuthorized,
@@ -22,7 +22,7 @@ categoriesRouter.post(
   createCategoryController
 );
 
-// {{url}}/categories/delCategory/boc
+// {{baseUrl}}/categories/delCategory/boc
 categoriesRouter.delete(
   "/delCategory/:slug",
   isAuthorized,
@@ -30,7 +30,7 @@ categoriesRouter.delete(
   deleteCategoryController
 );
 
-// {{url}}/categories/getSingleCategory/boc
+// {{baseUrl}}/categories/getSingleCategory/boc
 categoriesRouter.get(
   "/getSingleCategory/:slug",
   isAuthorized,
@@ -38,7 +38,7 @@ categoriesRouter.get(
   getSingleCategoryController
 );
 
-// {{url}}/categories/updateCategory/boc
+// {{baseUrl}}/categories/updateCategory/boc
 categoriesRouter.put(
   "/updateCategory/:slug",
   isAuthorized,

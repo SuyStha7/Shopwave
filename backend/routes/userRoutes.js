@@ -9,17 +9,17 @@ import { isAdmin, isAuthorized } from "../middlewares/authMiddleware.js";
 
 const userRouter = express.Router();
 
-// url = http://localhost:8000/api/v1
-
-// {{url}}/users/register
+// {{baseUrl}}/users/register
 userRouter.post("/register", registerController);
-// {{url}}/users/login
+
+// {{baseUrl}}/users/login
 userRouter.post("/login", loginController);
-// {{url}}/users/logout
+
+// {{baseUrl}}/users/logout
 userRouter.get("/logout", logoutController);
 
 // Admin routes
-// {{url}}/users/all-users
+// {{baseUrl}}/users/all-users
 userRouter.get("/all-users", isAuthorized, isAdmin, allUsersController);
 
 export default userRouter;

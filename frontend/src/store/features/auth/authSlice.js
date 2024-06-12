@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import authService from "./authService"; // Adjust the path if needed
+import authService from "./authService.js"; // Adjust the path if needed
 
 // Register thunk
 export const register = createAsyncThunk(

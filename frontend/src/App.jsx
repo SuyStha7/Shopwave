@@ -16,6 +16,7 @@ import Contact from "./pages/Contact";
 import Profile from "./pages/Profile";
 import Categories from "./pages/Admin/Categories";
 import UpdateCategory from "./pages/Admin/UpdateCategory";
+import AddProduct from "./pages/Admin/AddProduct";
 
 const App = () => {
   const location = useLocation();
@@ -70,6 +71,10 @@ const App = () => {
           <Route
             path='products'
             element={<Products />}
+          />
+          <Route
+            path='products/add'
+            element={<AddProduct/>}
           />
           <Route
             path='categories'

@@ -5,11 +5,11 @@ import { upload } from "../middlewares/multerMiddleware.js";
 
 const productsRouter = express.Router();
 
-// {{url}}/products/getProduct
+// {{baseUrl}}/products/getProduct
 productsRouter.get("/getProduct");
 
 // Admin routes
-// {{url}}/products/addProduct
+// {{baseUrl}}/products/addProduct
 productsRouter.post(
   "/addProduct",
   upload.single("picture"),
@@ -18,13 +18,13 @@ productsRouter.post(
   addProductController
 );
 
-// {{url}}/products/delProduct/boc
+// {{baseUrl}}/products/delProduct/boc
 productsRouter.delete("/delProduct/:slug", isAuthorized, isAdmin);
 
-// {{url}}/products/getSingleProduct/boc
+// {{baseUrl}}/products/getSingleProduct/boc
 productsRouter.get("/getSingleProduct/:slug", isAuthorized, isAdmin);
 
-// {{url}}/products/updateProduct/boc
+// {{baseUrl}}/products/updateProduct/boc
 productsRouter.put("/updateProduct/:slug", isAuthorized, isAdmin);
 
 export default productsRouter;
