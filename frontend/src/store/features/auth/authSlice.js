@@ -39,6 +39,18 @@ export const logout = createAsyncThunk("auth/logout", async (thunkAPI) => {
   }
 });
 
+export const getAllUsers = createAsyncThunk(
+  "auth/getAllUsers",
+  async (thunkAPI) => {
+    try {
+      const response = await authService.getAllUsers();
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const getUserDataFromLocalStorage = window.localStorage.getItem("user")
   ? JSON.parse(window.localStorage.getItem("user"))
   : null;
@@ -94,6 +106,20 @@ const authSlice = createSlice({
         state.user = null;
       })
       .addCase(logout.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+
+      // all users
+      .addCase(getAllUsers.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(getAllUsers.fulfilled, (state) => {
+        state.status = "succeeded";
+        state.user = null;
+      })
+      .addCase(getAllUsers.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });

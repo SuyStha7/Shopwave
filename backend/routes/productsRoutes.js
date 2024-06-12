@@ -1,12 +1,12 @@
 import express from "express";
 import { isAdmin, isAuthorized } from "../middlewares/authMiddleware.js";
-import { addProductController } from "../controllers/productsController.js";
+import { addProductController, getAllProductsController } from "../controllers/productsController.js";
 import { upload } from "../middlewares/multerMiddleware.js";
 
 const productsRouter = express.Router();
 
 // {{baseUrl}}/products/getProduct
-productsRouter.get("/getProduct");
+productsRouter.get("/getProduct", getAllProductsController);
 
 // Admin routes
 // {{baseUrl}}/products/addProduct

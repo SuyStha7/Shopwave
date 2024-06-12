@@ -60,6 +60,25 @@ const logoutUser = async () => {
   }
 };
 
-const authService = { loginUser, registerUser, logoutUser };
+const getAllUser = async () => {
+  try {
+    const axiosResponse = await axios.get(
+      `${import.meta.env.VITE_BASE_URL}/users/all-users`,
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      }
+    );
+    return axiosResponse.data;
+  } catch (error) {
+    const errorMessage =
+      error.response?.data?.message ||
+      error.message ||
+      "Something went wrong Please try again";
+    return Promise.reject(errorMessage);
+  }
+};
+
+const authService = { loginUser, registerUser, logoutUser, getAllUser };
 
 export default authService;
